@@ -1493,6 +1493,7 @@ header .btn {
   margin-top: 32px;
   overflow: hidden;
   background: rgba(40, 87, 217, 0.13);
+  margin-bottom: 40px;
 }
 
 .program-progress__line {
@@ -1590,7 +1591,7 @@ header .btn {
   }
 
   .program-progress {
-    margin: 24px 14px 0;
+    margin: 24px 14px 30px;
   }
   .btn {
     width: 100%;
@@ -3155,4 +3156,10 @@ header .btn {
   .contacts__to-top {
     font-size: 8px;
   }
+}
+
+.section-title__script.m {
+  margin-top: -15px;
+  display: block;
+  padding-left: 15px;
 }
