@@ -261,3 +261,65 @@ faqItems.forEach((item) => {
     }
   });
 });
+
+/* ======================================
+   About YouTube video
+====================================== */
+
+const aboutVideoPlayers = document.querySelectorAll("[data-about-video]");
+
+aboutVideoPlayers.forEach((player) => {
+  const videoId = player.dataset.videoId;
+  const playButton = player.querySelector("[data-video-play]");
+  const stopButton = player.querySelector("[data-video-stop]");
+  const frame = player.querySelector("[data-video-frame]");
+
+  if (!videoId || !playButton || !stopButton || !frame) return;
+
+  const playVideo = () => {
+    if (player.classList.contains("is-playing")) return;
+
+    const iframe = document.createElement("iframe");
+
+    const params = new URLSearchParams({
+      autoplay: "1",
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+      enablejsapi: "1",
+    });
+
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+    iframe.title = "Відео-знайомство з Тетяною Янченко";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+    frame.replaceChildren(iframe);
+    player.classList.add("is-playing");
+
+    stopButton.focus();
+  };
+
+  const stopVideo = () => {
+    /*
+     * Видаляємо iframe повністю.
+     * Завдяки цьому відео гарантовано зупиняється,
+     * а не продовжує грати у фоні.
+     */
+    frame.replaceChildren();
+    player.classList.remove("is-playing");
+
+    playButton.focus();
+  };
+
+  playButton.addEventListener("click", playVideo);
+  stopButton.addEventListener("click", stopVideo);
+
+  player.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && player.classList.contains("is-playing")) {
+      stopVideo();
+    }
+  });
+});
